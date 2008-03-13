@@ -1,7 +1,7 @@
 require 'DepGraph/version'
 
 AUTHOR = 'Daniel Cadenas Nión'  # can also be an array of Authors
-EMAIL = "depgraph-devel@rubyforge.org"
+EMAIL = "dcadenas@gmail.com"
 DESCRIPTION = "A tool to create dependency graph images from source code directories"
 GEM_NAME = 'DepGraph' # what ppl will type to install your gem
 RUBYFORGE_PROJECT = 'DepGraph' # The unix name for your project
