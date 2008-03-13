@@ -1,7 +1,7 @@
 --format
 specdoc
 --format
-html:website/specs.html
+html:specs.html
 --timeout
 20
 --diff
