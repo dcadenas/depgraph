@@ -1,0 +1,64 @@
+require File.dirname(__FILE__) + "/spec_helper"
+require 'rubygems'
+gem 'filetesthelper'
+require 'filetesthelper'
+
+include FileTestHelper
+
+default_graph_file = 'dependency_graph.png'
+tool_name = 'depgraph'
+tool_path = File.expand_path(File.join(File.dirname(__FILE__), '..', 'bin', tool_name))
+
+describe "#{tool_name} (integration tests)" do
+ 
+  test_data = {
+    :csproj => {'proj1.csproj' => '"proj2.csproj"', 'proj2.csproj' => '"proj1.csproj"'},
+    :ruby_requires => {'rubyfile1.rb' => 'require "rubyfile2"', 'rubyfile2.rb' => 'require "rubyfile3"'},
+  }
+
+  dependency_types.each do |filter_type|
+    it "should create a file from the #{filter_type} files found in the current directory" do
+      test_files = test_data[filter_type]
+      with_files(test_files) do
+        system "ruby #{tool_path} -type #{filter_type}"
+        
+        non_empty_file_created(default_graph_file).should be_true
+      end
+    end
+  end
+  
+  two_files_with_one_dependency_from_file1_to_file2 = {'file1.csproj' => '"file2.csproj"', 'file2.csproj' => ''}
+  it 'should not create a file when the "-from" filter does not find matches' do
+    with_files(two_files_with_one_dependency_from_file1_to_file2) do
+      system "ruby #{tool_path} -type csproj -from file2"
+      
+      File.exist?(default_graph_file).should be_false
+    end
+  end
+  
+  it 'should create a file when the "-from" filter finds matches' do
+    with_files(two_files_with_one_dependency_from_file1_to_file2) do
+      system "ruby #{tool_path} -type csproj -from file1"
+      
+      File.exist?(default_graph_file).should be_true
+    end
+  end
+  
+  it 'should not create a file when the "-to" filter does not find matches' do
+    with_files(two_files_with_one_dependency_from_file1_to_file2) do
+      system "ruby #{tool_path} -type csproj -to file1"
+      
+      File.exist?(default_graph_file).should be_false
+    end
+  end
+  
+  it 'should create a file when the "-to" filter finds matches' do
+    with_files(two_files_with_one_dependency_from_file1_to_file2) do
+      system "ruby #{tool_path} -type csproj -to file2"
+      
+      File.exist?(default_graph_file).should be_true
+    end
+  end
+end
+
+

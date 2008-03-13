@@ -1,0 +1,11 @@
+--- 
+csproj: 
+  file_name_pattern: "*.csproj"
+  dependable_regexp: !ruby/regexp /"([^"]*\\)?([^\\"]+?)\.(csproj|dll)"/
+  capture_group_index: 1
+ruby_requires: 
+  file_name_pattern: "*.rb"
+  dependable_regexp: !ruby/regexp /[\s]*require[\s]+["'](.*\/)?([^\s\/]+?)(\.rb)?["']/
+  capture_group_index: 1
+
+

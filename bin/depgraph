@@ -1,0 +1,69 @@
+#!/usr/bin/env ruby
+#
+#  Created on 2008-3-9.
+#  Copyright (c) 2008. Daniel Cadenas. All rights reserved.
+#  http://depgraph.rubyforge.org
+
+begin
+  require 'rubygems'
+  gem 'optiflag'
+  gem 'ruby-graphviz'
+  require 'optiflag'
+  require 'graphviz'
+rescue LoadError
+  puts "depgraph requires the optiflag RubyGem."
+  puts "Installation: gem install optiflag -y"
+  exit
+end
+
+require 'dependable_filter_manager'
+require 'graph_creator'
+
+module CommandLineParameters extend OptiFlagSet
+  flag "type" do
+    dependency_types = DepGraph::DependableFilterManager.types    
+    description "Type of dependencies to analyze: #{dependency_types.join(', ')}"
+    value_in_set dependency_types
+  end
+  
+  optional_flag "output" do
+    description "The file name of the image."
+  end
+
+
+  optional_flag "from" do
+    description "Regular expresion that must be met by the dependency source."
+  end
+  
+  optional_flag "to" do
+    description "Regular expresion that must be met by the dependency target."
+  end
+  
+  optional_flag "dirs" do
+    description "Directories to traverse for dependency files. Use double quotes and commas for more than one directory."
+  end
+  
+  usage_flag "h","help","?"
+
+  
+  and_process!
+end 
+
+type = CommandLineParameters.flags.type
+output = CommandLineParameters.flags.output || 'dependency_graph.png'
+dirs = CommandLineParameters.flags.dirs || '.'
+from = CommandLineParameters.flags.from if CommandLineParameters.flags.from?
+to = CommandLineParameters.flags.to if CommandLineParameters.flags.to?
+
+puts "Creating #{type} dependency graph. Please wait..."
+
+dep_grapher = DepGraph::GraphCreator.new(type)
+dep_grapher.dirs = dirs.split(',')
+dep_grapher.from= from
+dep_grapher.to = to
+
+if dep_grapher.create_image(output)
+  puts "Created #{output}.\nDone."
+else
+  puts "No dependency graph image created."
+end
