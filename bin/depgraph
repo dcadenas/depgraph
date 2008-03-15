@@ -16,8 +16,11 @@ rescue LoadError
   exit
 end
 
+$LOAD_PATH.unshift(File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib')))
+
 require 'dependable_filter_manager'
 require 'graph_creator'
+
 
 module CommandLineParameters extend OptiFlagSet
   flag "type" do
@@ -26,21 +29,24 @@ module CommandLineParameters extend OptiFlagSet
     value_in_set dependency_types
   end
   
+  optional_flag "exc" do
+    description "The node names to be excluded.\nUse double quotes and commas for multiple nodes."
+  end
+  
   optional_flag "output" do
-    description "The file name of the image."
+    description "The file name of the graph image."
   end
 
-
   optional_flag "from" do
-    description "Regular expresion that must be met by the dependency source."
+    description "Regular expression that must be met by the dependency source."
   end
   
   optional_flag "to" do
-    description "Regular expresion that must be met by the dependency target."
+    description "Regular expression that must be met by the dependency target."
   end
   
   optional_flag "dirs" do
-    description "Directories to traverse for dependency files. Use double quotes and commas for more than one directory."
+    description "Directories to traverse for dependency files.\nUse double quotes and commas for more than one directory."
   end
   
   usage_flag "h","help","?"
@@ -54,16 +60,19 @@ output = CommandLineParameters.flags.output || 'dependency_graph.png'
 dirs = CommandLineParameters.flags.dirs || '.'
 from = CommandLineParameters.flags.from if CommandLineParameters.flags.from?
 to = CommandLineParameters.flags.to if CommandLineParameters.flags.to?
+exc = CommandLineParameters.flags.exc || ''
 
 puts "Creating #{type} dependency graph. Please wait..."
 
 dep_grapher = DepGraph::GraphCreator.new(type)
 dep_grapher.dirs = dirs.split(',')
-dep_grapher.from= from
+dep_grapher.from = from
 dep_grapher.to = to
 
+dep_grapher.excluded_nodes = exc.split(',')
+
 if dep_grapher.create_image(output)
-  puts "Created #{output}.\nDone."
+  puts "Done.\nResults in #{output}."
 else
   puts "No dependency graph image created."
 end

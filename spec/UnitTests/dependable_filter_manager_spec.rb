@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + "/spec_helper"
+require File.dirname(__FILE__) + "/../spec_helper"
 require 'rubygems'
 require 'spec'
 require 'dependable_filter_manager'

@@ -15,6 +15,10 @@ module DepGraph
       @dirs = ['.']
     end 
     
+    def dirs=(directories)
+      @dirs = directories.map {|d| d.strip}
+    end
+    
     def get_dependents
       files = []
       @dirs.each do |dir|

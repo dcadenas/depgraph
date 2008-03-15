@@ -8,7 +8,7 @@ task :deploy => [:check_version, :website, :release] do
 end
 
 desc 'Runs tasks website_generate and install_gem as a local deployment of the gem'
-task :local_deploy => [:spec, :website_generate, :install_gem]
+task :local_deploy => [:allspec, :website_generate, :install_gem]
 
 task :check_version do
   unless ENV['VERSION']
