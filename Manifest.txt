@@ -13,6 +13,7 @@ lib/node.rb
 lib/file_system_node_finder.rb
 lib/graph_image_creator.rb
 lib/graph_creator.rb
+lib/nodefinders/test_node_finder.rb
 script/destroy
 script/destroy.cmd
 script/generate

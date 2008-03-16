@@ -113,14 +113,15 @@ describe GraphCreator do
   end
   
   it 'should dynamically load node finders based on the dependency type' do
-    pending do
-    class FakeNodeFinder
-      def dirs=(d) end
-      def get_nodes
-        d1 = Node.new('node1')
-        d2 = Node.new('node2')
-        d1.depends_on(d2)
-        [d1, d2]
+    module DepGraph::NodeFinders
+      class FakeNodeFinder
+        def dirs=(d) end
+        def get_nodes
+          d1 = Node.new('node1')
+          d2 = Node.new('node2')
+          d1.depends_on(d2)
+          [d1, d2]
+        end
       end
     end
     
@@ -129,7 +130,6 @@ describe GraphCreator do
     graph.node_count.should == 2
     graph.edge_count.should == 1
     dependency_exists?(graph, 'node1', 'node2').should be_true
-    end
   end
   
   invalid_graph_creators.each do |invalid_graph_creator_description, invalid_graph_creator|  

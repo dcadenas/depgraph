@@ -63,9 +63,17 @@ describe "#{tool_name} (integration tests)" do
   
   it 'should exclude nodes when the "-exc" filter is used' do
     with_files(three_files_with_chained_dependencies_from_file1_to_file2_to_file3) do
-      system 'ruby #{tool_path} -type csproj -exc "file2, ile3"'
+      system "ruby #{tool_path} -type csproj -exc \"file2, ile3\""
       
       File.exist?(default_graph_file).should be_false #because only file1 exists
+    end
+  end
+  
+  it 'should be possible to load the test node finder found in the nodefinders directory' do
+    with_files() do
+      system "ruby #{tool_path} -type test"
+      
+      File.exist?(default_graph_file).should be_true
     end
   end
 end
