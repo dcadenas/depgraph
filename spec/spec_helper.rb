@@ -26,13 +26,13 @@ def non_existent_filter_type
 end
 
 ########## Stubs ###########
-class MockDependentFinder
-  def initialize(dependents)
-    @dependents = dependents
+class MockNodeFinder
+  def initialize(nodes)
+    @nodes = nodes
   end
     
-  def get_dependents
-    @dependents
+  def get_nodes
+    @nodes
   end
 end
   
@@ -74,112 +74,112 @@ end
 
 
 ########## graph creator tests helper methods ###########
-def create_graph_creator_with_no_dependents
+def create_graph_creator_with_no_nodes
   graph_creator = GraphCreator.new
-  graph_creator.dependent_finder = MockDependentFinder.new([])
+  graph_creator.node_finder = MockNodeFinder.new([])
   
   return graph_creator
 end
 
-def create_graph_creator_with_only_one_dependent
+def create_graph_creator_with_only_one_node
   graph_creator = GraphCreator.new
-  graph_creator.dependent_finder = MockDependentFinder.new([Dependent.new('dependent/path')])  
+  graph_creator.node_finder = MockNodeFinder.new([Node.new('node/path')])  
   
   return graph_creator
 end
 
 def create_2_connected_plus_2_disconnected_nodes_graph_creator
-  dependent1 = Dependent.new('directory/path1')
-  dependent2 = Dependent.new('directory/path2')
-  dependent3 = Dependent.new('directory/anotherdir/path3')
-  dependent4 = Dependent.new('directory2/path4')
-  dependent5 = Dependent.new('directory2/anotherdir/path5')
-  dependent1.depends_on(dependent2)
-  dependent3.depends_on(dependent5)
-  dependent4.depends_on(dependent5)
+  node1 = Node.new('directory/path1')
+  node2 = Node.new('directory/path2')
+  node3 = Node.new('directory/anotherdir/path3')
+  node4 = Node.new('directory2/path4')
+  node5 = Node.new('directory2/anotherdir/path5')
+  node1.depends_on(node2)
+  node3.depends_on(node5)
+  node4.depends_on(node5)
   
   graph_creator = GraphCreator.new    
-  graph_creator.dependent_finder = MockDependentFinder.new([dependent1, dependent2, dependent3, dependent4])
+  graph_creator.node_finder = MockNodeFinder.new([node1, node2, node3, node4])
 
   return graph_creator
 end
 
-def create_graph_creator_with_three_dependents_that_are_equal
-  dependent1 = Dependent.new('directory/path')
-  dependent2 = Dependent.new('directory/path')
-  dependent3 = Dependent.new('directory/anotherdir/path')
+def create_graph_creator_with_three_nodes_that_are_equal
+  node1 = Node.new('directory/path')
+  node2 = Node.new('directory/path')
+  node3 = Node.new('directory/anotherdir/path')
     
   graph_creator = GraphCreator.new    
-  graph_creator.dependent_finder = MockDependentFinder.new([dependent1, dependent2, dependent3])
+  graph_creator.node_finder = MockNodeFinder.new([node1, node2, node3])
 
   return graph_creator
 end
 
-def create_graph_creator_with_two_dependents_and_no_dependencies
-  dependent1 = Dependent.new('dependent1/path1')
-  dependent2 = Dependent.new('dependent2/path2')
+def create_graph_creator_with_two_nodes_and_no_dependencies
+  node1 = Node.new('node1/path1')
+  node2 = Node.new('node2/path2')
     
   graph_creator = GraphCreator.new   
-  graph_creator.dependent_finder = MockDependentFinder.new([dependent1, dependent2])
+  graph_creator.node_finder = MockNodeFinder.new([node1, node2])
 
   return graph_creator
 end
 
-def create_dependency_chain_graph_creator(*nodes)
-  dependents = []
+def create_dependency_chain_graph_creator(*node_names)
+  nodes = []
 
-  nodes.each do |node|
-    dependents << Dependent.new(node)
+  node_names.each do |node|
+    nodes << Node.new(node)
   end
 
-  dependents.each_cons(2) do |dependent, dependable|
-    dependent.depends_on(dependable)
+  nodes.each_cons(2) do |node, dependable|
+    node.depends_on(dependable)
   end
     
   graph_creator = GraphCreator.new(:none)    
-  graph_creator.dependent_finder = MockDependentFinder.new(dependents)
+  graph_creator.node_finder = MockNodeFinder.new(nodes)
   
   return graph_creator
 end
 
 def create_graph_creator_with_two_nodes_and_one_dependency
-  return create_dependency_chain_graph_creator('dependent1/path1.csproj', 'dependent2/path2.dll')
+  return create_dependency_chain_graph_creator('node1/path1.csproj', 'node2/path2.dll')
 end
 
 def create_2_node_graph_creator_with_1_normal_and_1_orphan_dependency
-  dependent1 = Dependent.new('file1.csproj')
-  dependent2 = Dependent.new('file2.csproj')
-  dependent1.depends_on(dependent2)
-  dependent2.depends_on('non existent file3')
+  node1 = Node.new('file1.csproj')
+  node2 = Node.new('file2.csproj')
+  node1.depends_on(node2)
+  node2.depends_on('non existent file3')
     
   graph_creator = GraphCreator.new(:none)    
-  graph_creator.dependent_finder = MockDependentFinder.new([dependent1, dependent2])
+  graph_creator.node_finder = MockNodeFinder.new([node1, node2])
   
   return graph_creator
 end
 
 def create_2_connected_and_1_disconnected_node_with_an_orphan_dependency_graph_creator
-  dependent1 = Dependent.new('file1.csproj')
-  dependent2 = Dependent.new('file2.csproj')
-  dependent3 = Dependent.new('file3.csproj')
-  dependent4 = Dependent.new('file4.csproj')
+  node1 = Node.new('file1.csproj')
+  node2 = Node.new('file2.csproj')
+  node3 = Node.new('file3.csproj')
+  node4 = Node.new('file4.csproj')
   
-  dependent1.depends_on(dependent2)
+  node1.depends_on(node2)
   
-  #create an orphan dependency of disconnected node file3 because dependent4 will not be included in the graph
-  dependent3.depends_on(dependent4) 
+  #create an orphan dependency of disconnected node file3 because node4 will not be included in the graph
+  node3.depends_on(node4) 
     
   graph_creator = GraphCreator.new(:none)    
-  graph_creator.dependent_finder = MockDependentFinder.new([dependent1, dependent2, dependent3])
+  graph_creator.node_finder = MockNodeFinder.new([node1, node2, node3])
   
   return graph_creator
 end
 
 def invalid_graph_creators
   {
-    'graph creator with no dependents' => create_graph_creator_with_no_dependents,
-    'graph creator with only one dependent' => create_graph_creator_with_only_one_dependent,
-    'graph creator with three dependents that are equal' => create_graph_creator_with_three_dependents_that_are_equal,
+    'graph creator with no nodes' => create_graph_creator_with_no_nodes,
+    'graph creator with only one node' => create_graph_creator_with_only_one_node,
+    'graph creator with three nodes that are equal' => create_graph_creator_with_three_nodes_that_are_equal,
   }
 end
 

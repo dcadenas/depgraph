@@ -16,27 +16,27 @@ module DepGraph
       @@dependable_dependency_types.map {|type, _| type.to_sym}
     end
     
-    def initialize(dependent_type = :anything)
-      @dependent_type = dependent_type.to_s
+    def initialize(node_type = :anything)
+      @node_type = node_type.to_s
     end
     
     def dependable_regexp
-      get_dependent_type_parameters(@dependent_type)['dependable_regexp']
+      get_node_type_parameters(@node_type)['dependable_regexp']
     end
         
     def dependable_regexp_capture_group_index
-      get_dependent_type_parameters(@dependent_type)['capture_group_index']
+      get_node_type_parameters(@node_type)['capture_group_index']
     end
     
     def file_name_pattern
-      get_dependent_type_parameters(@dependent_type)['file_name_pattern']
+      get_node_type_parameters(@node_type)['file_name_pattern']
     end
     
-    def get_dependent_type_parameters(dependent_type)
-      dependent_type_parameters = @@dependable_dependency_types[dependent_type]
+    def get_node_type_parameters(node_type)
+      node_type_parameters = @@dependable_dependency_types[node_type]
       
-      if dependent_type_parameters
-        return dependent_type_parameters
+      if node_type_parameters
+        return node_type_parameters
       else
         return default_parameters = {
           'dependable_regexp' => /.+/,

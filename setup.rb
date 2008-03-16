@@ -234,7 +234,7 @@ class ConfigTable
       PathItem.new('librubyverarch', 'path', librubyverarch,
                    'the directory for standard ruby extensions'),
       PathItem.new('siteruby', 'path', siteruby,
-          'the directory for version-independent aux ruby libraries'),
+          'the directory for version-innode aux ruby libraries'),
       PathItem.new('siterubyver', 'path', siterubyver,
                    'the directory for aux ruby libraries'),
       PathItem.new('siterubyverarch', 'path', siterubyverarch,

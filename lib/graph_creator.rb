@@ -1,19 +1,19 @@
 require 'rubygems'
-require 'dependent'
+require 'node'
 require 'graph'
-require 'file_system_dependent_finder'
+require 'file_system_node_finder'
 
 module DepGraph
   class GraphCreator
-    attr_writer :graph_class, :from, :to, :dependent_finder
+    attr_writer :graph_class, :from, :to, :node_finder
     
-    def initialize(dependent_type = :none)
-      @dependent_finder = FileSystemDependentFinder.new(dependent_type)
+    def initialize(node_type = :none)
+      @node_finder = FileSystemNodeFinder.new(node_type)
       @graph_class = Graph
     end
     
     def dirs=(directories)
-      @dependent_finder.dirs = directories
+      @node_finder.dirs = directories
     end
     
     def excluded_nodes=(exc)
@@ -21,31 +21,24 @@ module DepGraph
     end
     
     def create_image(image_file_name = 'dependency_graph.png')
-      graph = create_graph
-      
-      if graph
-        return graph.create_image(image_file_name) 
-      else
-        return false
-      end
+      return create_graph.create_image(image_file_name) 
     end
     
     def create_graph
-      nodes = @dependent_finder.get_dependents.uniq
+      nodes = @node_finder.get_nodes.uniq
       nodes = apply_filters(nodes)
       nodes = remove_disconnected_nodes(nodes)
 
       graph = @graph_class.new            
       return graph if nodes.size < 2
 
-
-      nodes.each do |dependent|
-        graph.add_node dependent
+      nodes.each do |node|
+        graph.add_node(node)
       end
       
-      nodes.each do |dependent|
-        dependent.dependencies.each do |dependable|
-          graph.add_edge(dependent, dependable) if nodes.include? dependable
+      nodes.each do |node|
+        node.dependencies.each do |dependable|
+          graph.add_edge(node, dependable) if nodes.include? dependable
         end
       end
       
@@ -56,9 +49,7 @@ module DepGraph
     
     def remove_disconnected_nodes(nodes)
       nodes.select do |node|
-        res = nodes.any? {|n| n.depends_on?(node) or node.depends_on?(n)}
-        puts node.to_str unless res
-        res
+        nodes.any? {|n| n.depends_on?(node) or node.depends_on?(n)}
       end
     end
     
@@ -80,7 +71,7 @@ module DepGraph
       return nodes unless @from
       
       nodes.select do |node|
-        node.name.match(@from) or nodes.any?{|dependent| dependent.name.match(@from) and dependent.depends_on?(node)}
+        node.name.match(@from) or nodes.any?{|n| n.name.match(@from) and n.depends_on?(node)}
       end
     end
     
@@ -88,7 +79,7 @@ module DepGraph
       return nodes unless @to
       
       nodes.select do |node|
-        node.name.match(@to) or nodes.any?{|dependable| node.depends_on?(dependable) and dependable.name.match(@to)}
+        node.name.match(@to) or node.dependencies.any? {|d| d.name.match(@to)}
       end
     end
   end

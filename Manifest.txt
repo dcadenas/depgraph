@@ -9,8 +9,8 @@ config/requirements.rb
 lib/DepGraph/version.rb
 lib/dependable_filter_manager.rb
 lib/dependency_types.yaml
-lib/dependent.rb
-lib/file_system_dependent_finder.rb
+lib/node.rb
+lib/file_system_node_finder.rb
 lib/graph.rb
 lib/graph_creator.rb
 script/destroy
@@ -21,13 +21,14 @@ script/txt2html
 script/txt2html.cmd
 setup.rb
 spec/IntegrationTests/depgraph_spec.rb
-spec/IntegrationTests/file_system_dependent_finder_spec.rb
+spec/IntegrationTests/file_system_node_finder_spec.rb
 spec/IntegrationTests/graph_creator_spec.rb
 spec/IntegrationTests/graph_spec.rb
 spec/UnitTests/dependable_filter_manager_spec.rb
-spec/UnitTests/dependent_spec.rb
+spec/UnitTests/node_spec.rb
 spec/UnitTests/graph_creator_spec.rb
 spec/UnitTests/graph_spec.rb
+spec/UnitTests/file_system_node_finder_spec.rb
 spec/integration_spec.opts
 spec/spec.opts
 spec/spec_helper.rb
