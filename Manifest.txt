@@ -11,7 +11,7 @@ lib/dependable_filter_manager.rb
 lib/dependency_types.yaml
 lib/node.rb
 lib/file_system_node_finder.rb
-lib/graph.rb
+lib/graph_image_creator.rb
 lib/graph_creator.rb
 script/destroy
 script/destroy.cmd
@@ -27,7 +27,7 @@ spec/IntegrationTests/graph_spec.rb
 spec/UnitTests/dependable_filter_manager_spec.rb
 spec/UnitTests/node_spec.rb
 spec/UnitTests/graph_creator_spec.rb
-spec/UnitTests/graph_spec.rb
+spec/UnitTests/graph_image_creator_spec.rb
 spec/UnitTests/file_system_node_finder_spec.rb
 spec/integration_spec.opts
 spec/spec.opts
