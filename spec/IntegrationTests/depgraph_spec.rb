@@ -76,6 +76,15 @@ describe "#{tool_name} (integration tests)" do
       File.exist?(default_graph_file).should be_true
     end
   end
+  
+  it 'should be possible apply a transitive reduction to the output graph' do
+    with_files() do
+      system "ruby #{tool_path} -type test -trans"
+      
+      File.exist?(default_graph_file).should be_true
+      File.exist?('temp.dot').should be_false
+    end
+  end
 end
 
 

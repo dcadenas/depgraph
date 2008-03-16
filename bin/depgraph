@@ -44,30 +44,35 @@ module CommandLineParameters extend OptiFlagSet
     description "Regular expression that must be met by the dependency target."
   end
   
-  optional_flag "dirs" do
-    description "Directories to traverse for dependency files.\nUse double quotes and commas for more than one directory."
+  optional_flag "location" do
+    description "A string defining the place where the nodes to analyse are found.\nThis are directories for most dependency types.\n
+Use double quotes and commas for more than one directory."
+  end
+  
+  optional_switch_flag "trans" do
+    description "Applies a transitive reduction to the graph"
   end
   
   usage_flag "h","help","?"
-
   
   and_process!
 end 
 
 type = CommandLineParameters.flags.type
 output = CommandLineParameters.flags.output || 'dependency_graph.png'
-dirs = CommandLineParameters.flags.dirs || '.'
+location = CommandLineParameters.flags.location || '.'
 from = CommandLineParameters.flags.from if CommandLineParameters.flags.from?
 to = CommandLineParameters.flags.to if CommandLineParameters.flags.to?
 exc = CommandLineParameters.flags.exc || ''
+trans = CommandLineParameters.flags.trans?
 
 puts "Creating #{type} dependency graph. Please wait..."
 
 dep_grapher = DepGraph::GraphCreator.new(type)
-dep_grapher.dirs = dirs.split(',')
+dep_grapher.location = location.split(',')
 dep_grapher.from = from
 dep_grapher.to = to
-
+dep_grapher.trans = trans
 dep_grapher.excluded_nodes = exc.split(',')
 
 if dep_grapher.create_image(output)

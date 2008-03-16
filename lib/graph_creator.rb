@@ -6,11 +6,12 @@ require 'dependency_types_manager'
 
 module DepGraph
   class GraphCreator
-    attr_writer :graph_image_creator_class, :from, :to, :node_finder
+    attr_writer :graph_image_creator_class, :from, :to, :node_finder, :trans
     
     def initialize(node_type = :none)
       @node_finder = get_node_finder(node_type)
       @graph_image_creator_class = GraphImageCreator
+      @trans = false
     end
     
     def self.types
@@ -20,8 +21,8 @@ module DepGraph
       return DependencyTypesManager.types + node_finders
     end
     
-    def dirs=(directories)
-      @node_finder.dirs = directories
+    def location=(loc)
+      @node_finder.location = loc
     end
     
     def excluded_nodes=(exc)
@@ -50,6 +51,8 @@ module DepGraph
         end
       end
       
+      graph.trans = @trans
+      
       return graph
     end
 
@@ -57,7 +60,7 @@ module DepGraph
     def get_node_finder(node_type)
       begin
         begin
-        require "nodefinders/#{node_type.to_s}_node_finder"
+          require "nodefinders/#{node_type.to_s}_node_finder"
         rescue LoadError
         end
         

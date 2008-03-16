@@ -1,1 +1,19 @@
+0.9.0
 
+* Added dynamic loading of node finders from directory lib/nodefinders.
+ Example:
+   see 'lib/nodefinders/TestNodeFinder.rb' which can be used like this:
+   depgraph -type test
+* Added functionality to exclude the nodes the user is not interested in.
+ Example:
+   depgraph -type ruby_requires -exc "client, server"
+* A transitive reduction can be applied to the graph.
+ Example:
+   depgraph -type csproj -trans
+* Disconnected nodes don't show up anymore.
+* The type of output can be selected by changing the file extension. 
+ Example:
+   depgraph -type test -output test.dot
+* Separated unit tests and integration tests in different folders.
+* Renamed option -dirs to -location
+* Some more refactorings.

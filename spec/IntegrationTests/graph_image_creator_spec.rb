@@ -40,5 +40,14 @@ describe GraphImageCreator, '(integration tests)' do
       File.exist?('test.png').should be_false
     end
   end
+  
+  it 'can generate dot script'do
+    graph = create_graph_with_2_nodes_and_1_edge
+    with_files do
+      graph.create_image('test.dot')
+      File.exist?('test.dot').should be_true
+      File.read('test.dot').match('digraph G').should_not be_nil
+    end
+  end
 end
 

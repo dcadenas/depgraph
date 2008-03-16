@@ -21,7 +21,7 @@ describe FileSystemNodeFinder, '(integration tests)' do
   it 'should search only in the specified directories' do
     with_files('good1/file1' => '', 'good2/file2' => '', 'bad/file3' => '') do
       node_finder = FileSystemNodeFinder.new(non_existent_filter_type)
-      node_finder.dirs = ['good1', 'good2']
+      node_finder.location = ['good1', 'good2']
         
       nodes = node_finder.get_nodes
       nodes.should == ['file1', 'file2']

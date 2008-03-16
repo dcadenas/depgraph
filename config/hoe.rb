@@ -6,7 +6,7 @@ DESCRIPTION = "A tool to create dependency graph images from source code directo
 GEM_NAME = 'DepGraph' # what ppl will type to install your gem
 RUBYFORGE_PROJECT = 'DepGraph' # The unix name for your project
 HOMEPATH = "http://#{RUBYFORGE_PROJECT}.rubyforge.org"
-DOWNLOAD_PATH = "http://rubyforge.org/projects/#{RUBYFORGE_PROJECT}"
+DOWNLOAD_PATH = "http://rubyforge.org/projects/#{RUBYFORGE_PROJECT.downcase}"
 
 @config_file = "~/.rubyforge/user-config.yml"
 @config = nil

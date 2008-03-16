@@ -4,7 +4,7 @@ require 'dependency_types_manager'
 module DepGraph
   class FileSystemNodeFinder
     attr_accessor :dependable_filter, :dependable_filter_capture_group_index, :file_name_pattern
-    attr_writer :dirs
+    attr_writer :location
     
     def initialize(node_type)
       
@@ -12,16 +12,16 @@ module DepGraph
       @file_name_pattern = dependable_filter_manager.file_name_pattern
       @dependable_filter = dependable_filter_manager.dependable_regexp
       @dependable_filter_capture_group_index = dependable_filter_manager.dependable_regexp_capture_group_index
-      @dirs = ['.']
+      @location = ['.']
     end 
     
-    def dirs=(directories)
-      @dirs = directories.map {|d| d.strip}
+    def location=(locs)
+      @location = locs.map {|d| d.strip}
     end
     
     def get_nodes
       files = []
-      @dirs.each do |dir|
+      @location.each do |dir|
         files += Dir.glob(dir.strip + '/**/' + @file_name_pattern)
       end
       

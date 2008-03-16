@@ -3,14 +3,23 @@ require 'node'
 module DepGraph
   module NodeFinders
     
-    #This is an example of a custom node finder with a hard coded graph from node1 to node2.
+    #This is a simple example of a custom node finder with a hard coded graph.
+    #Note that the file must be named [nodetype]_node_finder.rb containing a class named [Nodetype]NodeFinder
+    #To use this example do: depgraph -type test
     class TestNodeFinder
-      def dirs=(d) end
+      def location=(loc)
+        #we will ignore location in this example
+      end
+      
       def get_nodes
-        d1 = Node.new('node1')
-        d2 = Node.new('node2')
-        d1.depends_on(d2)
-        [d1, d2]
+        #let's return a hardcoded graph with 2 nodes and one dependency between them
+        
+        node1 = Node.new('node1')
+        node2 = Node.new('node2')
+        
+        node1.depends_on(node2)
+        
+        return [node1, node2] 
       end
     end
   end

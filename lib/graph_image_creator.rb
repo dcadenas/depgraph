@@ -3,9 +3,12 @@ require 'graphviz'
 
 module DepGraph
   class GraphImageCreator
+    attr_writer :trans
+    
     def initialize
       @nodes = []
       @edges = []
+      @trans = false
     end
 
     def node_count
@@ -69,21 +72,54 @@ module DepGraph
       unless @output_generation 
         @output_generation = lambda {|nodes, edges, image_file_name|
           #TODO: Could we catch Graphviz errors that the wrapper couldn't catch?        
-          g = GraphViz::new( "G", :use => 'dot', :mode => 'major', :rankdir => 'LR', :concentrate => 'true', :fontname => 'Arial', :file => image_file_name)      
+          g = GraphViz::new( "G", :use => 'dot', :mode => 'major', :rankdir => 'LR', :concentrate => 'true', :fontname => 'Arial')      
 
-        
-          nodes.each do |node|
-            g.add_node(quotify(node))
-          end
-      
-          edges.each do |from, to|
-            g.add_edge(quotify(from), quotify(to))
-          end
-      
-          g.output( :output => "png")
+          load_nodes(g, nodes)        
+          load_edges(g, edges)
+
+          create_output(g, image_file_name)          
+          
           return true
         }
       end
+    end
+    
+    def load_nodes(g, nodes)
+      nodes.each do |node|
+        g.add_node(quotify(node))
+      end
+    end
+    
+    def load_edges(g, edges)
+      edges.each do |from, to|
+        g.add_edge(quotify(from), quotify(to))
+      end
+    end
+    
+    def create_output(g, image_file_name)
+      output_type = get_output_type(image_file_name)
+          
+      if @trans
+        begin
+          g.output(:file => 'temp.dot', :output => 'dot')
+          system "tred temp.dot|dot -T#{output_type} > #{image_file_name}"
+        ensure
+          File.delete('temp.dot')
+        end
+      else
+        g.output(:file => image_file_name, :output => output_type)
+      end
+    end
+    
+    def get_output_type(image_file_name)
+      #png is the default output type
+      output_type = 'png'
+
+      image_file_name.scan(/.+\.([^\.]*)$/) do |matches|
+        output_type = matches[0]        
+      end
+      
+      return output_type
     end
   end
 end

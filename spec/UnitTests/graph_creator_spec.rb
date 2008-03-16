@@ -115,7 +115,7 @@ describe GraphCreator do
   it 'should dynamically load node finders based on the dependency type' do
     module DepGraph::NodeFinders
       class FakeNodeFinder
-        def dirs=(d) end
+        def location=(d) end
         def get_nodes
           d1 = Node.new('node1')
           d2 = Node.new('node2')
