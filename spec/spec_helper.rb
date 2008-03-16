@@ -12,7 +12,7 @@ $LOAD_PATH.unshift("#{dir}/")
 $LOAD_PATH.unshift("#{dir}/../lib") 
 
 require 'dependable_filter_manager'
-require 'graph'
+require 'graph_image_creator'
 def dependency_types
   DepGraph::DependableFilterManager.types
 end
@@ -36,7 +36,7 @@ class MockNodeFinder
   end
 end
   
-class NoOutputGraph < DepGraph::Graph
+class NoOutputGraph < DepGraph::GraphImageCreator
   def initialize
     super
     output_generation = lambda { true }
@@ -46,7 +46,7 @@ end
 ########## graph helper methods
 
 def create_empty_graph
-  Graph.new
+  GraphImageCreator.new
 end
 
 def create_graph_with_2_nodes_and_1_edge

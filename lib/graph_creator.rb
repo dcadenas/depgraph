@@ -1,15 +1,15 @@
 require 'rubygems'
 require 'node'
-require 'graph'
+require 'graph_image_creator'
 require 'file_system_node_finder'
 
 module DepGraph
   class GraphCreator
-    attr_writer :graph_class, :from, :to, :node_finder
+    attr_writer :graph_image_creator_class, :from, :to, :node_finder
     
     def initialize(node_type = :none)
       @node_finder = FileSystemNodeFinder.new(node_type)
-      @graph_class = Graph
+      @graph_image_creator_class = GraphImageCreator
     end
     
     def dirs=(directories)
@@ -29,7 +29,7 @@ module DepGraph
       nodes = apply_filters(nodes)
       nodes = remove_disconnected_nodes(nodes)
 
-      graph = @graph_class.new            
+      graph = @graph_image_creator_class.new            
       return graph if nodes.size < 2
 
       nodes.each do |node|

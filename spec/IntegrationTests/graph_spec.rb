@@ -7,7 +7,7 @@ require 'filetesthelper'
 include FileTestHelper
 include DepGraph
 
-describe Graph, '(integration tests)' do
+describe GraphImageCreator, '(integration tests)' do
   it "should create a file with the graph image" do
     with_files do
       graph = create_graph_with_2_nodes_and_1_edge    

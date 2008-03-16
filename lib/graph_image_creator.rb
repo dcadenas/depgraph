@@ -2,7 +2,7 @@ require 'rubygems'
 require 'graphviz'
 
 module DepGraph
-  class Graph
+  class GraphImageCreator
     def initialize
       @nodes = []
       @edges = []

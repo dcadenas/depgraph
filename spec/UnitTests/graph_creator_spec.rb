@@ -102,13 +102,13 @@ describe GraphCreator do
   
   it 'should notify sucessful image creation' do
     graph_creator = create_graph_creator_with_two_nodes_and_one_dependency
-    graph_creator.graph_class = NoOutputGraph
+    graph_creator.graph_image_creator_class = NoOutputGraph
     graph_creator.create_image('graph.png').should be_true
   end
   
   it 'should notify failed image creation' do
     graph_creator = create_graph_creator_with_no_nodes
-    graph_creator.graph_class = NoOutputGraph
+    graph_creator.graph_image_creator_class = NoOutputGraph
     graph_creator.create_image('graph.png').should be_false
   end
   
@@ -134,7 +134,7 @@ describe GraphCreator do
   
   invalid_graph_creators.each do |invalid_graph_creator_description, invalid_graph_creator|  
     it "should return false when trying to create an image from a #{invalid_graph_creator_description}" do
-      invalid_graph_creator.graph_class = NoOutputGraph
+      invalid_graph_creator.graph_image_creator_class = NoOutputGraph
       invalid_graph_creator.create_image('graph.png').should be_false
     end
   end
