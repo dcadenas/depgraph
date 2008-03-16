@@ -11,10 +11,10 @@ dir = File.expand_path(File.dirname(__FILE__))
 $LOAD_PATH.unshift("#{dir}/") 
 $LOAD_PATH.unshift("#{dir}/../lib") 
 
-require 'dependable_filter_manager'
+require 'dependency_types_manager'
 require 'graph_image_creator'
 def dependency_types
-  DepGraph::DependableFilterManager.types
+  DepGraph::DependencyTypesManager.types
 end
 
 def non_empty_file_created(file_name)
@@ -22,7 +22,7 @@ def non_empty_file_created(file_name)
 end
 
 def non_existent_filter_type
-  DependableFilterManager.types.join + 'thisdoesntexist'
+  DependencyTypesManager.types.join + 'thisdoesntexist'
 end
 
 ########## Stubs ###########

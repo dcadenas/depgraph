@@ -18,13 +18,13 @@ end
 
 $LOAD_PATH.unshift(File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib')))
 
-require 'dependable_filter_manager'
+require 'dependency_types_manager'
 require 'graph_creator'
 
 
 module CommandLineParameters extend OptiFlagSet
   flag "type" do
-    dependency_types = DepGraph::DependableFilterManager.types    
+    dependency_types = DepGraph::DependencyTypesManager.types    
     description "Type of dependencies to analyze: #{dependency_types.join(', ')}"
     value_in_set dependency_types
   end

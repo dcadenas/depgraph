@@ -1,7 +1,7 @@
 require 'yaml'
 
 module DepGraph
-  class DependableFilterManager
+  class DependencyTypesManager
     def self.dependency_types_file
       File.join(File.dirname(__FILE__), 'dependency_types.yaml')
     end

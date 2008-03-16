@@ -1,5 +1,5 @@
 require 'node'
-require 'dependable_filter_manager'
+require 'dependency_types_manager'
 
 module DepGraph
   class FileSystemNodeFinder
@@ -8,7 +8,7 @@ module DepGraph
     
     def initialize(node_type)
       
-      dependable_filter_manager = DependableFilterManager.new node_type
+      dependable_filter_manager = DependencyTypesManager.new node_type
       @file_name_pattern = dependable_filter_manager.file_name_pattern
       @dependable_filter = dependable_filter_manager.dependable_regexp
       @dependable_filter_capture_group_index = dependable_filter_manager.dependable_regexp_capture_group_index

@@ -7,7 +7,7 @@ bin/depgraph
 config/hoe.rb
 config/requirements.rb
 lib/DepGraph/version.rb
-lib/dependable_filter_manager.rb
+lib/dependency_types_manager.rb
 lib/dependency_types.yaml
 lib/node.rb
 lib/file_system_node_finder.rb
@@ -24,7 +24,7 @@ spec/IntegrationTests/depgraph_spec.rb
 spec/IntegrationTests/file_system_node_finder_spec.rb
 spec/IntegrationTests/graph_creator_spec.rb
 spec/IntegrationTests/graph_spec.rb
-spec/UnitTests/dependable_filter_manager_spec.rb
+spec/UnitTests/dependency_types_manager_spec.rb
 spec/UnitTests/node_spec.rb
 spec/UnitTests/graph_creator_spec.rb
 spec/UnitTests/graph_image_creator_spec.rb
