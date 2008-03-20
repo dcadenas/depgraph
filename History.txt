@@ -1,3 +1,7 @@
+0.9.1
+
+* Added dependencies to optiflag and ruby-graphviz to the gem
+
 0.9.0
 
 * Added dynamic loading of node finders from directory lib/nodefinders.
