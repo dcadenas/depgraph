@@ -60,7 +60,7 @@ end
 
 type = CommandLineParameters.flags.type
 output = CommandLineParameters.flags.output || 'dependency_graph.png'
-location = CommandLineParameters.flags.location || '.'
+location = CommandLineParameters.flags.location
 from = CommandLineParameters.flags.from if CommandLineParameters.flags.from?
 to = CommandLineParameters.flags.to if CommandLineParameters.flags.to?
 exc = CommandLineParameters.flags.exc || ''
@@ -69,7 +69,7 @@ trans = CommandLineParameters.flags.trans?
 puts "Creating #{type} dependency graph. Please wait..."
 
 dep_grapher = DepGraph::GraphCreator.new(type)
-dep_grapher.location = location.split(',')
+dep_grapher.location = location.split(',') if location
 dep_grapher.from = from
 dep_grapher.to = to
 dep_grapher.trans = trans

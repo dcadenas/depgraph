@@ -16,7 +16,11 @@ module DepGraph
     end 
     
     def location=(locs)
-      @location = locs.map {|d| d.strip}
+      if locs
+        @location = locs.map {|d| d.strip}
+      else
+        @location = ['.']
+      end
     end
     
     def get_nodes

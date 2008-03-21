@@ -14,6 +14,7 @@ lib/file_system_node_finder.rb
 lib/graph_image_creator.rb
 lib/graph_creator.rb
 lib/nodefinders/test_node_finder.rb
+lib/nodefinders/gems_node_finder.rb
 script/destroy
 script/destroy.cmd
 script/generate
@@ -23,6 +24,7 @@ script/txt2html.cmd
 setup.rb
 spec/IntegrationTests/depgraph_spec.rb
 spec/IntegrationTests/file_system_node_finder_spec.rb
+spec/IntegrationTests/gems_node_finder_spec.rb
 spec/IntegrationTests/graph_creator_spec.rb
 spec/IntegrationTests/graph_image_creator_spec.rb
 spec/UnitTests/dependency_types_manager_spec.rb

@@ -1,6 +1,6 @@
-0.9.1
-
-* Added dependencies to optiflag and ruby-graphviz to the gem
+0.10.0
+* Now you can create the dependency graph of all the installed gems.
+* Fixed the missing dependencies to optiflag and ruby-graphviz to the deployed gem.
 
 0.9.0
 

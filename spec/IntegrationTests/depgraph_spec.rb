@@ -2,6 +2,7 @@ require File.dirname(__FILE__) + "/../spec_helper"
 require 'rubygems'
 gem 'filetesthelper'
 require 'filetesthelper'
+require 'graph_creator'
 
 include FileTestHelper
 
@@ -14,10 +15,11 @@ describe "#{tool_name} (integration tests)" do
   test_data = {
     :csproj => {'proj1.csproj' => '"proj2.csproj"', 'proj2.csproj' => '"proj1.csproj"'},
     :ruby_requires => {'rubyfile1.rb' => 'require "rubyfile2"', 'rubyfile2.rb' => 'require "rubyfile3"'},
+    :gems => {}
   }
 
-  dependency_types.each do |filter_type|
-    it "should create a file from the #{filter_type} files found in the current directory" do
+  DepGraph::GraphCreator.types.each do |filter_type|
+    it "should create an image from the #{filter_type} dependency type" do
       test_files = test_data[filter_type]
       with_files(test_files) do
         system "ruby #{tool_path} -type #{filter_type}"
