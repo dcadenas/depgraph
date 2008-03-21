@@ -1,3 +1,6 @@
+0.10.1
+* Applied patch misleading_dependency_error_messages.patch by Trevor Fountain
+
 0.10.0
 * Now you can create the dependency graph of all the installed gems.
 * Fixed the missing dependencies to optiflag and ruby-graphviz to the deployed gem.

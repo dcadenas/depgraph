@@ -7,12 +7,19 @@
 begin
   require 'rubygems'
   gem 'optiflag'
-  gem 'ruby-graphviz'
   require 'optiflag'
-  require 'graphviz'
 rescue LoadError
   puts "depgraph requires the optiflag RubyGem."
   puts "Installation: gem install optiflag -y"
+  exit
+end
+
+begin
+  gem 'ruby-graphviz'
+  require 'graphviz'
+rescue LoadError
+  puts "depgraph requires the ruby-graphviz."
+  puts "Installation: gem install ruby-graphviz"
   exit
 end
 
