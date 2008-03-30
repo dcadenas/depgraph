@@ -1,5 +1,6 @@
 0.10.1
 * Applied patch misleading_dependency_error_messages.patch by Trevor Fountain
+* Fixed some bugs in the tests
 
 0.10.0
 * Now you can create the dependency graph of all the installed gems.
