@@ -43,7 +43,7 @@ dependency_types.each do |filter_type|
     it "should find the correct number of nodes" do
       with_files(test_files) do
         nodes = FileSystemNodeFinder.new(filter_type).get_nodes
-        nodes.should == ['a', 'b', 'c']
+        nodes.sort.should == ['a', 'b', 'c']
       end
     end
     it "should correctly find the dependencies from each file" do
