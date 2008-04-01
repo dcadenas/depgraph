@@ -1,4 +1,5 @@
 0.10.1
+* Applied patch DepGraph-fix_sorting_assumption.patch by Diego Algorta Casamayou
 * Applied patch misleading_dependency_error_messages.patch by Trevor Fountain
 * Fixed some bugs in the tests
 
