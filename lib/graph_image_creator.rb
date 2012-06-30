@@ -86,13 +86,13 @@ module DepGraph
     
     def load_nodes(g, nodes)
       nodes.each do |node|
-        g.add_node(quotify(node))
+        g.add_nodes(quotify(node))
       end
     end
     
     def load_edges(g, edges)
       edges.each do |from, to|
-        g.add_edge(quotify(from), quotify(to))
+        g.add_edges(quotify(from), quotify(to))
       end
     end
     
