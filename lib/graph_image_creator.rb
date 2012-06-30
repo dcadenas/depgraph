@@ -86,13 +86,13 @@ module DepGraph
     
     def load_nodes(g, nodes)
       nodes.each do |node|
-        g.add_node(quotify(node))
+        g.add_nodes(quotify(node))
       end
     end
     
     def load_edges(g, edges)
       edges.each do |from, to|
-        g.add_edge(quotify(from), quotify(to))
+        g.add_edges(quotify(from), quotify(to))
       end
     end
     
@@ -101,13 +101,13 @@ module DepGraph
           
       if @trans
         begin
-          g.output(:file => 'temp.dot', :output => 'dot')
+          g.output(:dot => 'temp.dot')
           system "tred temp.dot|dot -T#{output_type} > #{image_file_name}"
         ensure
           File.delete('temp.dot')
         end
       else
-        g.output(:file => image_file_name, :output => output_type)
+        g.output(output_type => image_file_name)
       end
     end
     

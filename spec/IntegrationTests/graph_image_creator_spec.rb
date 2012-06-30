@@ -1,9 +1,6 @@
 require File.dirname(__FILE__) + "/../spec_helper"
 require 'graph_image_creator'
 require 'rubygems'
-gem 'filetesthelper'
-require 'spec'
-require 'filetesthelper'
 include FileTestHelper
 include DepGraph
 
