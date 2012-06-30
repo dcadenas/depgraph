@@ -101,13 +101,13 @@ module DepGraph
           
       if @trans
         begin
-          g.output(:file => 'temp.dot', :output => 'dot')
+          g.output(:dot => 'temp.dot')
           system "tred temp.dot|dot -T#{output_type} > #{image_file_name}"
         ensure
           File.delete('temp.dot')
         end
       else
-        g.output(:file => image_file_name, :output => output_type)
+        g.output(output_type => image_file_name)
       end
     end
     
