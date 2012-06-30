@@ -59,7 +59,7 @@ def create_graph_with_2_nodes_and_0_edges
 end
 
 def no_output_generation
-  lambda {true}
+  lambda {|*args| true}
 end
 
 def dependency_exists?(graph, from, to)
