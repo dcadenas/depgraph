@@ -1,8 +1,6 @@
 require File.dirname(__FILE__) + "/../spec_helper"
 require 'stringio'
 require 'node' 
-require 'rubygems'
-require 'spec'
 include DepGraph
 
 describe Node do

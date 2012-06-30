@@ -1,6 +1,5 @@
 require File.dirname(__FILE__) + "/../spec_helper"
 require 'rubygems'
-require 'filetesthelper'
 require 'nodefinders/gems_node_finder'
 
 include FileTestHelper

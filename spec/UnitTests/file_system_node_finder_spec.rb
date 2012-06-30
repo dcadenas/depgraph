@@ -1,7 +1,5 @@
 require File.dirname(__FILE__) + "/../spec_helper"
 require 'file_system_node_finder'
-require 'rubygems'
-require 'spec'
 
 include DepGraph
 

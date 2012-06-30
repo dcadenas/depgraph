@@ -1,11 +1,5 @@
 require 'enumerator'
-begin
-  require 'spec'
-rescue LoadError
-  require 'rubygems'
-  gem 'rspec'
-  require 'spec'
-end
+require 'file_test_helper'
 
 dir = File.expand_path(File.dirname(__FILE__)) 
 $LOAD_PATH.unshift("#{dir}/") 

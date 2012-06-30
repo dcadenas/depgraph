@@ -1,6 +1,4 @@
 require File.dirname(__FILE__) + "/../spec_helper"
-require 'rubygems'
-require 'spec'
 require 'dependency_types_manager'
 include DepGraph
 

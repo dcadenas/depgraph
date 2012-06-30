@@ -1,7 +1,5 @@
 require File.dirname(__FILE__) + "/../spec_helper"
 require 'rubygems'
-gem 'filetesthelper'
-require 'filetesthelper'
 require 'graph_creator'
 
 include FileTestHelper
