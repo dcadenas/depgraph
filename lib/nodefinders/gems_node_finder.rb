@@ -24,7 +24,7 @@ module DepGraph
           end
         end
         
-        return nodes.values
+        return nodes.values.sort
       end
 
       private
