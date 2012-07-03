@@ -1,7 +1,5 @@
 require File.dirname(__FILE__) + "/../spec_helper"
 require 'graph_image_creator'
-require 'rubygems'
-require 'spec'
 include DepGraph
 
 describe GraphImageCreator do
