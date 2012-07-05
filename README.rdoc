@@ -12,7 +12,7 @@ A Ruby tool to create dependency graph images from any kind of file
 
 == INSTALL:
 
-* gem install dcadenas-DepGraph
+* gem install depgraph
 
 == LICENSE:
 
