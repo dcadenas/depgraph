@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+require File.join(File.dirname(__FILE__), 'lib/DepGraph/version.rb')
 
 Gem::Specification.new do |s|
   s.name = "depgraph"
@@ -15,7 +16,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency(%q<rake>, ["~> 10.1.1"])
   s.add_development_dependency(%q<filetesthelper>, ["~> 1.0.1"])
 
-  s.version = File.read("VERSION")
+  spec.version = DepGraph::VERSION::STRING
   s.files = `git ls-files`.split
 end
 
