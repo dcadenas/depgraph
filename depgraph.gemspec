@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency(%q<rake>, ["~> 10.1.1"])
   s.add_development_dependency(%q<filetesthelper>, ["~> 1.0.1"])
 
-  spec.version = DepGraph::VERSION::STRING
+  s.version = DepGraph::VERSION::STRING
   s.files = `git ls-files`.split
 end
 
